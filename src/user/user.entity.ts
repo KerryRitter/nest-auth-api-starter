@@ -1,22 +1,25 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
+export enum Role {
+  SuperAdmin = "superadmin",
+  Admin = "admin",
+  User = "user"
+}
+
 @Entity()
 export class User {
   @PrimaryGeneratedColumn() 
   id: number;
 
-  @Column({ length: 500 })
-  name: string;
+  @Column({ length: 25 })
+  username: string;
 
-  @Column('text') 
-  description: string;
-
-  @Column() 
-  filename: string;
-
-  @Column('int') 
-  views: number;
-
-  @Column() 
-  isPublished: boolean;
+  @Column({ length: 50 })
+  email: string;
+  
+  @Column()
+  passwordHash: string;
+  
+  @Column("varchar")
+  role: Role;
 }
