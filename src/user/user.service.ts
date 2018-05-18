@@ -24,10 +24,15 @@ export class UserService {
   }
 
   async findByEmail(email: string): Promise<User> {
-    return await this.userRepository.findOne({ email });
+    return await this.userRepository.findOne({ email: email.toLocaleLowerCase() });
+  }
+
+  async findByUsername(username: string): Promise<User> {
+    return await this.userRepository.findOne({ username });
   }
 
   async create(user: User, passwordUnencrypted: string): Promise<User> {
+    user.email = user.email.toLocaleLowerCase();
     user.passwordHash = await this.encryptionService.encrypt(passwordUnencrypted);
     return await this.userRepository.save(user);
   }
