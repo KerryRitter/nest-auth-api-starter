@@ -1,4 +1,4 @@
-export interface TokenRequest {
+export interface TokenRequestDto {
     email: string;
     password: string;
 }

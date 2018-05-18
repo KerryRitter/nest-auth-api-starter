@@ -16,7 +16,7 @@ export class AuthService {
   }
 
   async validateLogin(email: string, passwordClear: string) {
-    const user = await this.userService.findByEmail(email);;
+    const user = await this.userService.findByEmail(email);
 
     if (!user) {
       return false;

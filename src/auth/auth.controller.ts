@@ -3,16 +3,20 @@ import { Controller, Get, UseGuards, Response, Body, HttpStatus, Post } from '@n
 import { AuthGuard } from '@nestjs/passport';
 
 import { User } from 'user/user.entity';
+import { UserService } from 'user/user.service';
 
 import { AuthService } from './auth.service';
-import { TokenRequest } from './interfaces';
+import { TokenRequestDto, CreateUserDto } from './interfaces';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService
+  ) {}
 
   @Post('token')
-  async loginUser(@Response() res: any, @Body() body: TokenRequest) {
+  async loginUser(@Response() res: any, @Body() body: TokenRequestDto) {
     if (!(body && body.email && body.password)) {
       return res.status(HttpStatus.BAD_REQUEST).json({ message: 'Email and password are required!' });
     }
@@ -22,6 +26,11 @@ export class AuthController {
     }
 
     return res.status(HttpStatus.OK).json(await this.authService.createToken(body.email));
+  }
+
+  @Post('register')
+  async registerUser(@Response() res: any, @Body() body: TokenRequestDto) {
+    this.authService
   }
 
   @Get('test')

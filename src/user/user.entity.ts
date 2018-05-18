@@ -22,4 +22,14 @@ export class User {
   
   @Column("varchar")
   role: Role;
+
+  public static parse(data: Partial<User>) {
+    let obj = new User();
+
+    obj.email = data.email;
+    obj.username = data.username;
+    obj.role = data.role;
+
+    return obj;
+  }
 }
